@@ -1,0 +1,290 @@
+---
+title: "Your Personalized Report"
+date: "Fall 2019"
+output:
+  pdf_document
+header-includes:
+   - \usepackage[utf8]{inputenc}
+   - \DeclareUnicodeCharacter{2588}{-}
+---
+
+```{r setup, include = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(knitr) # Required for knitting
+library(tidyverse) # Required for data cleaning
+library(stringr) # Required for data cleaning
+library(ggplot2) # Required for plots
+```
+
+```{r}
+# Load data for participant passed from "RUNME" R script
+data.student <- filter(data, uni == student)
+```
+
+# Results for `r data.student$firstname` `r data.student$lastname` (`r data.student$uni`)
+
+## Big Five Inventory (John, Donahue, & Kentle, 1991)
+
+### Extraversion
+
+Extraversion represents the degree to which a person is generally assertive, full of energy, and talkative.
+
+*In this graph, the gray bars are a histogram displaying the full class' scores on this extraversion measure, and the blue line indicates where your score falls in this distribution.*
+
+```{r extraversion, fig.height = 4, fig.width = 4, fig.align="center"}
+extraversion.plot +
+  geom_vline(aes(xintercept = data.student$extraversion), color = 'blue')
+```
+
+**Class Statistics:**
+
+Mean: `r round(extraversion.mean, digits = 2)`
+
+SD: `r round(extraversion.sd, digits = 2)`
+
+Your extraversion score is **`r round(data.student$extraversion, digits = 2)`**, which corresponds with a z-score of `r round((data.student$extraversion - extraversion.mean) / extraversion.sd, digits = 2)` given the class statistics.
+
+\newpage
+
+### Agreeableness
+
+Agreeableness represents the degree to which a person is generally sympathetic, affectionate, and kind.
+
+*In this graph, the gray bars are a histogram displaying the full class' scores on this agreeableness measure, and the blue line indicates where your score falls in this distribution.*
+
+```{r agreeableness, fig.height = 4, fig.width = 4, fig.align="center"}
+agreeableness.plot +
+  geom_vline(aes(xintercept = data.student$agreeableness), color = 'blue')
+```
+
+**Class Statistics:**
+
+Mean: `r round(agreeableness.mean, digits = 2)`
+
+SD: `r round(agreeableness.sd, digits = 2)`
+
+Your agreeableness score is **`r round(data.student$agreeableness, digits = 2)`**, which corresponds with a z-score of `r round((data.student$agreeableness - agreeableness.mean) / agreeableness.sd, digits = 2)` given the class statistics.
+
+\newpage
+
+### Conscientiousness
+
+Conscientiousness represents the degree to which a person is generally planful, thorough, and organized.
+
+*In this graph, the gray bars are a histogram displaying the full class' scores on this conscientiousness measure, and the blue line indicates where your score falls in this distribution.*
+
+```{r conscientiousness, fig.height = 4, fig.width = 4, fig.align="center"}
+conscientiousness.plot +
+  geom_vline(aes(xintercept = data.student$conscientiousness), color = 'blue')
+```
+
+**Class Statistics:**
+
+Mean: `r round(conscientiousness.mean, digits = 2)`
+
+SD: `r round(conscientiousness.sd, digits = 2)`
+
+Your conscientiousness score is **`r round(data.student$conscientiousness, digits = 2)`**, which corresponds with a z-score of `r round((data.student$conscientiousness - conscientiousness.mean) / conscientiousness.sd, digits = 2)` given the class statistics.
+
+\newpage
+
+### Neuroticism
+
+Neuroticism represents the degree to which a person is generally anxious and tense.
+
+*In this graph, the gray bars are a histogram displaying the full class' scores on this neuroticism measure, and the blue line indicates where your score falls in this distribution.*
+
+```{r neuroticism, fig.height = 4, fig.width = 4, fig.align="center"}
+neuroticism.plot +
+  geom_vline(aes(xintercept = data.student$neuroticism), color = 'blue')
+```
+
+**Class Statistics:**
+
+Mean: `r round(neuroticism.mean, digits = 2)`
+
+SD: `r round(neuroticism.sd, digits = 2)`
+
+Your neuroticism score is **`r round(data.student$neuroticism, digits = 2)`**, which corresponds with a z-score of `r round((data.student$neuroticism - neuroticism.mean) / neuroticism.sd, digits = 2)` given the class statistics.
+
+\newpage
+
+### Openness to Experience
+
+Openness to experience represents the degree to which a person is generally curious, imaginative, and interested in a broad range of topics.
+
+*In this graph, the gray bars are a histogram displaying the full class' scores on this openness measure, and the blue line indicates where your score falls in this distribution.*
+
+```{r openness, fig.height = 4, fig.width = 4, fig.align="center"}
+openness.plot +
+  geom_vline(aes(xintercept = data.student$openness), color = 'blue')
+```
+
+**Class Statistics:**
+
+Mean: `r round(openness.mean, digits = 2)`
+
+SD: `r round(openness.sd, digits = 2)`
+
+Your openness score is **`r round(data.student$openness, digits = 2)`**, which corresponds with a z-score of `r round((data.student$openness - openness.mean) / openness.sd, digits = 2)` given the class statistics.
+
+\newpage
+
+## Regulatory Focus Questionnaire (Higgins, Friedman, Harlow, Idson, Ayduk, & Taylor, 2001)
+
+### Regulatory Focus Pride
+
+Prevention pride represents the degree to which a person has historically been successful in maintaining security and fulfilling their responsibilities; as a result, people high in prevention pride tend to approach new goals vigilantly. Promotion pride represents the degree to which a person has historically been successful in achieving their hopes and accomplishing their aspirations; as a result, people high in promotion pride tend to approach new goals eagerly. These dimensions are independent; a person can be high in both, low in both, or high in one and low in the other.
+
+*In this graph, the gray bars indicate the average prevention pride and promotion pride scores for the full class, and the blue points indicate where your scores fall on these measures.*
+
+```{r rfq, fig.height = 4, fig.width = 4, fig.align="center"}
+rfq.plot +
+  geom_point(aes(x = "Prevention Pride", y = data.student$prev), color = 'blue', size = 5) +
+  geom_point(aes(x = "Promotion Pride", y = data.student$prom), color = 'blue', size = 5)
+```
+
+**Class Statistics:**
+
+Mean Prevention Pride Score: `r round(prev.mean, digits = 2)` (SD = `r round(prev.sd, digits = 2)`)
+
+Mean Promotion Pride Score: `r round(prom.mean, digits = 2)` (SD = `r round(prom.sd, digits = 2)`)
+
+Your prevention pride score is **`r round(data.student$prev, digits = 2)`**, which corresponds with a z-score of `r round((data.student$prev - prev.mean) / prev.sd, digits = 2)` given the class statistics. Your promotion pride score is **`r round(data.student$prom, digits = 2)`**, which corresponds with a z-score of `r round((data.student$prom - prom.mean) / prom.sd, digits = 2)`.
+
+\newpage
+
+## Regulatory Mode Questionnaire (Kruglanski, Thompson, Higgins, Atash, Pierro, Shah, & Spiegel, 2000)
+
+### Regulatory Mode
+
+Assessment represents the degree to which a person tends to be oriented toward thinking and critical evaluation when they are pursuing a goal (e.g., evaluating potential means or ends to choose the right one, or comparing their current state to their desired state). Locomotion represents the degree to which a person tends to be oriented toward doing, movement, and action when they are pursuing a goal. These dimensions are independent; a person can be high in both, low in both, or high in one and low in the other.
+
+*In this graph, the gray bars indicate the average assessment and locomotion scores for the full class, and the blue points indicate where your scores fall on these measures.*
+
+```{r rmq, fig.height = 4, fig.width = 4, fig.align="center"}
+rmq.plot +
+  geom_point(aes(x = "Assessment", y = data.student$ass), color = 'blue', size = 5) +
+  geom_point(aes(x = "Locomotion", y = data.student$loc), color = 'blue', size = 5)
+```
+
+**Class Statistics:**
+
+Mean Assessment Score: `r round(ass.mean, digits = 2)` (SD = `r round(ass.sd, digits = 2)`)
+
+Mean Locomotion Score: `r round(loc.mean, digits = 2)` (SD = `r round(loc.sd, digits = 2)`)
+
+Your assessment score is **`r round(data.student$ass, digits = 2)`**, which corresponds with a z-score of `r round((data.student$ass - ass.mean) / ass.sd, digits = 2)` given the class statistics. Your locomotion score is **`r round(data.student$loc, digits = 2)`**, which corresponds with a z-score of `r round((data.student$loc - loc.mean) / loc.sd, digits = 2)`.
+
+\newpage
+
+## Moral Foundations Questionnaire (Graham, Haidt, & Nosek, 2008)
+
+### Moral Foundations
+
+Care/harm represents the degree to which virtues like kindness, compassion, and nurturance are considered morally relevant. Fairness/cheating represents the degree to which virtues like justice and equality are considered morally relevant. Loyalty/betrayal represents the degree to which virtues like patriotism and loyalty to one's ingroup are considered morally relevant. Authority/subversion represents the degree to which virtues like deference to authority and respect for traditions are considered morally relevant. Sanctity/degradation represents the degree to which virtues like purity, chastity, and avoidance of disgusting behavior are considered morally relevant.
+
+*In this graph, the gray bars indicate the average moral foundation scores for the full class, and the blue points indicate where your scores fall on these measures.*
+
+```{r mfq, fig.height = 4, fig.align="center"}
+mfq.plot +
+  geom_point(aes(x = "Care/Harm", y = data.student$harmcare), color = 'blue', size = 5) +
+  geom_point(aes(x = "Fairness/Cheating", y = data.student$fairrec), color = 'blue', size = 5) +
+  geom_point(aes(x = "Loyalty/Betrayal", y = data.student$ingrployal), color = 'blue', size = 5) +
+  geom_point(aes(x = "Authority/Subversion", y = data.student$authresp), color = 'blue', size = 5) +
+  geom_point(aes(x = "Sanctity/Degradation", y = data.student$puresanc), color = 'blue', size = 5)
+```
+
+**Class Statistics:**
+
+Mean Care/Harm Score: `r round(harmcare.mean, digits = 2)` (SD = `r round(harmcare.sd, digits = 2)`)
+
+Mean Fairness/Cheating Score: `r round(fairrec.mean, digits = 2)` (SD = `r round(fairrec.sd, digits = 2)`)
+
+Mean Loyalty/Betrayal Score: `r round(ingrployal.mean, digits = 2)` (SD = `r round(ingrployal.sd, digits = 2)`)
+
+Mean Authority/Subversion Score: `r round(authresp.mean, digits = 2)` (SD = `r round(authresp.sd, digits = 2)`)
+
+Mean Sanctity/Degradation Score: `r round(puresanc.mean, digits = 2)` (SD = `r round(puresanc.sd, digits = 2)`)
+
+Your care/harm score is **`r round(data.student$harmcare, digits = 2)`**, which corresponds with a z-score of `r round((data.student$harmcare - harmcare.mean) / harmcare.sd, digits = 2)` given the class statistics. Your fairness/cheating score is **`r round(data.student$fairrec, digits = 2)`**, which corresponds with a z-score of `r round((data.student$fairrec - fairrec.mean) / fairrec.sd, digits = 2)`. Your loyalty/betrayal score is **`r round(data.student$ingrployal, digits = 2)`**, which corresponds with a z-score of `r round((data.student$ingrployal - ingrployal.mean) / ingrployal.sd, digits = 2)`. Your authority/subversion score is **`r round(data.student$authresp, digits = 2)`**, which corresponds with a z-score of `r round((data.student$authresp - authresp.mean) / authresp.sd, digits = 2)`. Finally, your sanctity/degradation score is **`r round(data.student$puresanc, digits = 2)`**, which corresponds with a z-score of `r round((data.student$puresanc - puresanc.mean) / puresanc.sd, digits = 2)`.
+
+\newpage
+
+## Relationship Theories Questionnaire (Franiuk, Cohen, & Pomerantz, 2002)
+
+### Relationship Theory Endorsement
+
+People who endorse soulmate theories tend to believe that relationship satisfaction is dependent upon finding the right person. People who endorse work-it-out theories tend to believe that relationship satisfaction is dependent upon putting effort into the relationship. Although these implicit beliefs are independent, they tend to be negatively correlated.
+
+*In this graph, the gray bars indicate the average relationship theory scores for the full class, and the blue points indicate where your scores fall on these measures.*
+
+```{r rtq, fig.height = 4, fig.width = 4, fig.align="center"}
+rtq.plot +
+  geom_point(aes(x = "Soulmate", y = data.student$soulmate), color = 'blue', size = 5) +
+  geom_point(aes(x = "Work-It-Out", y = data.student$workitout), color = 'blue', size = 5)
+```
+
+**Class Statistics:**
+
+Mean Soulmate Score: `r round(soulmate.mean, digits = 2)` (SD = `r round(soulmate.sd, digits = 2)`)
+
+Mean Work-It-Out Score: `r round(workitout.mean, digits = 2)` (SD = `r round(workitout.sd, digits = 2)`)
+
+Your soulmate score is **`r round(data.student$soulmate, digits = 2)`**, which corresponds with a z-score of `r round((data.student$soulmate - soulmate.mean) / soulmate.sd, digits = 2)` given the class statistics. Your work-it-out score is **`r round(data.student$workitout, digits = 2)`**, which corresponds with a z-score of `r round((data.student$workitout - workitout.mean) / workitout.sd, digits = 2)`.
+
+\newpage
+
+## Aspiration Index (Kasser & Ryan, 1996)
+
+### Aspiration Index
+
+The Aspiration Index assesses the relative degree to which various goals are considered central to a person. Four of these goals are considered intrinsic (i.e., fulfill fundamental needs): self-acceptance, affiliation, feeling that one is part of a community, and physical fitness. Three of these goals are consiered extrinsic (i.e., function as a means to some other end): financial success, attractive appearance, and social recognition.
+
+*In this graph, the colored bars indicate the average aspiration index scores for the full class. (Intrinsic motives are colored blue; extrinsic motives are colored green.) The blue points indicate where your scores fall on these measures. Scores above 0 represent that the importance of this domain is above the average importance across all domains; scores below 0 represent that the importance of this domain is below the average importance across all domains.*
+
+```{r ai, fig.height = 3.5, fig.align="center"}
+ai.plot +
+  geom_point(aes(x = "Self-Acceptance", y = data.student$selfaccept), color = 'blue', size = 5) +
+  geom_point(aes(x = "Affiliation", y = data.student$affil), color = 'blue', size = 5) +
+  geom_point(aes(x = "Community Feeling", y = data.student$commflg), color = 'blue', size = 5) +
+  geom_point(aes(x = "Physical Fitness", y = data.student$physfit), color = 'blue', size = 5) +
+  geom_point(aes(x = "Financial Success", y = data.student$finsucc), color = 'blue', size = 5) +
+  geom_point(aes(x = "Attractive Appearance", y = data.student$attractive), color = 'blue', size = 5) +
+  geom_point(aes(x = "Social Recognition", y = data.student$socrec), color = 'blue', size = 5)
+```
+
+**Class Statistics:**
+
+Please note: Standard deviations and z-scores are not provided for this measure, as each individual's final scores are *relative* scores that depend upon their ratings in all other domains.
+
+Mean Self-Acceptance Score: `r round(selfaccept.mean, digits = 2)`
+
+Mean Affiliation Score: `r round(affil.mean, digits = 2)`
+
+Mean Community Feeling Score: `r round(commflg.mean, digits = 2)`
+
+Mean Physical Fitness Score: `r round(physfit.mean, digits = 2)`
+
+Mean Financial Success Score: `r round(finsucc.mean, digits = 2)`
+
+Mean Attractive Appearance Score: `r round(attractive.mean, digits = 2)`
+
+Mean Social Recognition Score: `r round(socrec.mean, digits = 2)`
+
+Your self-acceptance score is **`r round(data.student$selfaccept, digits = 2)`**. Your affiliation score is **`r round(data.student$affil, digits = 2)`**. Your community feeling score is **`r round(data.student$commflg, digits = 2)`**. Your physical fitness score is **`r round(data.student$physfit, digits = 2)`**. Your financial success score is **`r round(data.student$finsucc, digits = 2)`**. Your attractive appearance score is **`r round(data.student$attractive, digits = 2)`**. Finally, your social recognition score is **`r round(data.student$socrec, digits = 2)`**.
+
+## Preference Measures
+
+### Beach or Mountain (Oishi, Talhelm, & Lee, 2015)
+
+`r case_when(data.student$beach == "Beach" ~ paste0("You are part of the ", round(beach.prop * 100, digits = 2), "% of the class that reported that you would prefer to visit beach (vs. mountain) destinations."), data.student$beach == "Mountain" ~ paste0("You are part of the ", round(mountain.prop * 100, digits = 2), "% of the class that reported that you would prefer to visit mountain (vs. beach) destinations."), data.student$beach == "No Preference" ~ paste0("You are part of the ", round(nopref.prop * 100, digits = 2), "% of the class that reported that you do not have a preference for visiting beach vs. mountain destinations."))`
+
+### Cat or Dog
+
+`r case_when(data.student$catdog == "Dog" ~ paste0("You are part of the ", round(dog.mean * 100, digits = 2), "% of the class that reported that you are more of a dog (vs. cat) person."), data.student$catdog == "Cat" ~ paste0("You are part of the ", round((1 - dog.mean) * 100, digits = 2), "% of the class that reported that you are more of a cat (vs. dog) person."))`
+
+### Tea or Coffee
+
+`r case_when(data.student$teacoffee == "Coffee" ~ paste0("You are part of the ", round(coffee.mean * 100, digits = 2), "% of the class that reported that you are more of a coffee (vs. tea) person."), data.student$teacoffee == "Tea" ~ paste0("You are part of the ", round((1 - coffee.mean) * 100, digits = 2), "% of the class that reported that you are more of a tea (vs. coffee) person."))`
